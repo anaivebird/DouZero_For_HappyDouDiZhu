@@ -310,19 +310,12 @@ class MyPyQT_Form(QtWidgets.QWidget, Ui_Form):
         return other_played_cards_real
 
     def cards_filter(self, location, distance):  # 牌检测结果滤波
-        if len(location) == 0:
-            return 0
-        locList = [location[0][0]]
-        count = 1
-        for e in location:
-            flag = 1  # “是新的”标志
-            for have in locList:
-                if abs(e[0] - have) <= distance:
-                    flag = 0
-                    break
-            if flag:
+        left_set = {box[0] for box in location}
+        count = 0
+        for index, left in enumerate(left_set):
+            if index == 0 or left - last > distance:
                 count += 1
-                locList.append(e[0])
+            last = left
         return count
 
     def have_white(self, pos):  # 是否有白块
