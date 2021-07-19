@@ -310,9 +310,9 @@ class MyPyQT_Form(QtWidgets.QWidget, Ui_Form):
         return other_played_cards_real
 
     def cards_filter(self, location, distance):  # 牌检测结果滤波
-        left_set = {box[0] for box in location}
+        left_sorted = sorted([box[0] for box in location])
         count = 0
-        for index, left in enumerate(left_set):
+        for index, left in enumerate(left_sorted):
             if index == 0 or left - last > distance:
                 count += 1
             last = left
